@@ -1,7 +1,7 @@
 console.log("JAVA SCRIPT CONECTADO!!!");
 
 // CLASSE - MOLDE PARA CRIAR OBJETOS
-class carro {
+class Veiculo {
   //CONSTRUTOR - É UM MÉTODO ESPECIAL DO JAVASCRIPT
   constructor(marca, modelo) {
     // Aqui que estão dentros são os argumentos/variáveis
@@ -12,8 +12,8 @@ class carro {
 }
 
 //OBJETO - É UMA INSTANCIA DE CLASSE.
-const primeiroCarro = new carro("Toyota", "Corolla");
-console.log(primeiroCarro.marca); // A gente chama ela nessa construção aqui
+const carro = new Veiculo("Toyota", "Corolla");
+console.log(carro.marca); // A gente chama ela nessa construção aqui
 
 /* --------------------------------------------------------------------------------- */
 
@@ -103,11 +103,13 @@ class usuario {
     this.senha = senha;
   }
 
+  // MÉTODO verificarForcadaSenha ENCAPSULADO - TRADUZINDO ELE ESTA PRIVADO, APENAS OS ATRIBUTOS DENTRO DESSA CLASSE TEM ACESSO A ELE
+
   #verificarForcadaSenha(senha) {
     return senha.length > 6 ? true : false;
   }
 
-  criarConta(senha) {
+  criarConta() {
     if (this.#verificarForcadaSenha(this.senha)) {
       return console.log("Conta criada!!!");
     }
@@ -118,3 +120,51 @@ class usuario {
 
 const user = new usuario("123456789");
 user.criarConta();
+
+/* --------------------------------------------------------------------------------- */
+
+class Carro extends Veiculo {
+  constructor(marca, modelo, portas) {
+    super(marca, modelo);
+    this.portas = portas;
+  }
+
+  info() {
+    console.log(
+      `A marca do carro é: ${this.marca}, seu modelo é: ${this.modelo} e ele possui ${this.portas} portas`
+    );
+  }
+}
+
+const meuCarro = new Carro("Honda", "Civic", 4);
+meuCarro.info();
+
+/* --------------------------------------------------------------------------------- */
+
+class Funcionario {
+  constructor(nome, salario) {
+    this.nome = nome;
+    this.salario = salario;
+  }
+
+  mostrarDados() {
+    console.log(
+      `Funcionario: ${this.nome}, salário: R$${this.salario.toFixed(2)}`
+    );
+  }
+}
+
+class Gerente extends Funcionario {
+  constructor(nome, salario, tipo) {
+    super(nome, salario);
+    this.tipo = tipo;
+  }
+
+  mostrarSetor() {
+    console.log(`${this.nome} é gerente do setor ${this.tipo}`);
+  }
+}
+
+const gerente = new Gerente("Alcindo", 1000, "TI");
+gerente.mostrarDados();
+gerente.mostrarSetor();
